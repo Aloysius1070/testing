@@ -1,0 +1,363 @@
+/* ========================================
+   CONTACT/DEMO CONVERSION-OPTIMIZED DESIGN
+   ======================================== */
+
+:root {
+  --contact-primary: #6366f1;
+  --contact-primary-hover: #4f46e5;
+  --contact-success: #10b981;
+}
+
+[data-theme='dark'] {
+  --contact-primary: #818cf8;
+  --contact-primary-hover: #6366f1;
+}
+
+/* ========================================
+   DEMO PAGE LAYOUT
+   ======================================== */
+
+.demo-page-container {
+  min-height: 100vh;
+  padding: 60px 24px 80px;
+}
+
+.demo-content-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 80px;
+  align-items: start;
+}
+
+/* ========================================
+   DEMO HERO SECTION (LEFT)
+   ======================================== */
+
+.demo-hero-section {
+  padding-top: 40px;
+}
+
+.demo-hero-heading {
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+  margin: 0 0 20px 0;
+  letter-spacing: -0.5px;
+}
+
+.demo-hero-heading .highlight {
+  color: var(--contact-primary);
+}
+
+.demo-hero-subheading {
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 48px 0;
+}
+
+/* What Happens Next Section */
+.demo-what-next {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.demo-what-next-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-steps-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.demo-step-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.demo-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--contact-primary), #8b5cf6);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.demo-step-content h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 4px 0;
+}
+
+.demo-step-content p {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Trust Indicators */
+.demo-trust-badges {
+  display: flex;
+  gap: 24px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.demo-trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.demo-trust-badge svg {
+  color: var(--contact-success);
+}
+
+/* ========================================
+   DEMO FORM SECTION (RIGHT)
+   ======================================== */
+
+.demo-form-card {
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 40px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 100px;
+}
+
+.demo-form-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.demo-form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px 0;
+}
+
+.demo-form-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Form Sections */
+.demo-form-section {
+  margin-bottom: 28px;
+}
+
+.demo-form-section:last-of-type {
+  margin-bottom: 0;
+}
+
+.demo-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 16px 0;
+  display: block;
+}
+
+/* Form Inputs */
+.demo-input-group {
+  margin-bottom: 16px;
+}
+
+.demo-input-group:last-child {
+  margin-bottom: 0;
+}
+
+.demo-input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin: 0 0 8px 0;
+  display: block;
+}
+
+.demo-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.demo-input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.demo-input {
+  width: 100%;
+  padding: 14px 16px 14px 46px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--panel-alt);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.demo-input:focus {
+  border-color: var(--contact-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+[data-theme='dark'] .demo-input:focus {
+  box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.2);
+}
+
+.demo-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Two-column inputs */
+.demo-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Submit Button */
+.demo-submit-btn {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--contact-primary), #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.demo-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+.demo-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Form Footer */
+.demo-form-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.demo-form-note {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.demo-form-note svg {
+  color: var(--contact-success);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .demo-content-wrapper {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  
+  .demo-form-card {
+    position: static;
+  }
+  
+  .demo-hero-heading {
+    font-size: 36px;
+  }
+  
+  .demo-hero-subheading {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-page-container {
+    padding: 40px 16px 60px;
+  }
+  
+  .demo-hero-section {
+    padding-top: 20px;
+  }
+  
+  .demo-hero-heading {
+    font-size: 32px;
+  }
+  
+  .demo-hero-subheading {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .demo-form-card {
+    padding: 28px 24px;
+  }
+  
+  .demo-what-next {
+    padding: 24px;
+  }
+  
+  .demo-input-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .demo-trust-badges {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -10,6 +10,7 @@ from features.gst_reconciliation.router import router as gst_router
 from features.invoice_extraction.router import router as invoice_router
 from features.tds_calculation.router import router as tds_router
 from features.ledger_classification.router import router as ledger_router
+from features.companies_data.router import router as companies_data_router
 from features.auth.router import router as auth_router
 
 from features.trial.router import router as trial_router
@@ -58,6 +59,7 @@ def create_app() -> FastAPI:
     app.include_router(invoice_router)
     app.include_router(tds_router)
     app.include_router(ledger_router)
+    app.include_router(companies_data_router)
     app.include_router(auth_router)
 
     # -----------------------------------------------------

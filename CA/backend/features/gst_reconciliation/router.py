@@ -63,7 +63,8 @@ async def gst_check(background_tasks: BackgroundTasks, request: Request, file: U
     # =========================================================
     trial_info = None
     auth = request.headers.get("Authorization")
-    
+    authenticated = False
+
     # Try trial auth first (Bearer token)
     if auth and auth.startswith("Bearer "):
         token = auth.split(" ")[1]
@@ -74,34 +75,37 @@ async def gst_check(background_tasks: BackgroundTasks, request: Request, file: U
                 pre_check = process_trial_phase(payload, "pre")
                 if not pre_check["ok"]:
                     raise HTTPException(
-                        status_code=403, 
+                        status_code=403,
                         detail="Your free trial has ended. Please purchase a plan."
                     )
                 # Store trial info for POST-phase decrement after successful job
                 trial_info = payload
+                authenticated = True
         except HTTPException:
             raise
-        except Exception:
-            raise HTTPException(status_code=401, detail="Invalid or expired token")
-    else:
-        # Try subscriber cookie auth
+        except Exception as e:
+            # Bearer token is invalid - will try cookie auth as fallback
+            print(f"⚠️ Bearer token validation failed: {e}, trying cookie auth")
+
+    # Try subscriber cookie auth (if not already authenticated)
+    if not authenticated:
         try:
             user = get_current_user_from_cookie(request)
             # Subscriber validated - no further checks needed
+            authenticated = True
         except HTTPException as e:
             print(f"🔍 /check caught HTTPException: status={e.status_code}, detail={e.detail}")
-            
+
             # Handle plan expiration - auto logout (includes "Plan expired" and "No active subscription")
             if e.status_code == 403 and (
-                "plan expired" in e.detail.lower() or 
+                "plan expired" in e.detail.lower() or
                 "subscription expired" in e.detail.lower() or
                 "no active subscription" in e.detail.lower()
             ):
                 from app.security.hard_logout import hard_logout_by_device
-                from app.security.jwt_utils import decode_access_token
-                
+
                 print(f"✅ Matched plan expiration/no subscription - auto logout")
-                
+
                 token = request.cookies.get("access_token")
                 if token:
                     try:
@@ -116,14 +120,14 @@ async def gst_check(background_tasks: BackgroundTasks, request: Request, file: U
                         print(f"❌ Hard logout failed: {logout_err}")
                 else:
                     print(f"⚠️ No access_token cookie found")
-                
+
                 raise HTTPException(status_code=401, detail="Plan expired. Logged out.")
             # Re-raise other errors
             print(f"🔄 Re-raising error: {e.detail}")
             raise
-        except HTTPException:
+        except Exception:
             raise HTTPException(
-                status_code=401, 
+                status_code=401,
                 detail="Authentication required. Please log in or start a free trial."
             )
     

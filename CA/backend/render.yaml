@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: ca-backend
+    env: python
+    runtime: python-3.11
+    rootDir: backend
+    buildCommand: |
+      apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-eng
+      pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SUPABASE_URL
+        sync: false  # Set this in Render dashboard
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false  # Set this in Render dashboard
+      - key: JWT_SECRET_KEY
+        generateValue: true  # Render will auto-generate a secure secret
+        key: GMAIL_USER
+        sync: false  # Optional: Set if using email OTP
+      - key: GMAIL_APP_PASSWORD
+        sync: false  # Optional: Set if using email OTP
+      # - key: RESEND_API_KEY
+      #   sync: false  # Set this in Render dashboard - Get from resend.com
+      # - key: EMAIL_FROM
+      #   value: onboarding@resend.dev  # Update with your verified domain

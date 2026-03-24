@@ -1,0 +1,46 @@
+"""Excel export utility for invoice extraction"""
+
+import pandas as pd
+import io
+
+
+def export_excel(rows: list[dict]) -> bytes:
+    """
+    Export invoice data rows to Excel format with proper formatting
+    
+    Args:
+        rows: List of invoice data dictionaries
+        
+    Returns:
+        Excel file as bytes
+    """
+    df = pd.DataFrame(rows)
+    out = io.BytesIO()
+    
+    with pd.ExcelWriter(out, engine="openpyxl") as writer:
+        df.to_excel(writer, index=False, sheet_name="Invoices")
+        
+        # Get the worksheet
+        worksheet = writer.sheets['Invoices']
+        
+        # Format numeric columns to show full precision
+        for col in ['E', 'G', 'I', 'J']:  # taxable_value, cgst_amount, sgst_amount, total_tax_amount
+            for cell in worksheet[col]:
+                if cell.row > 1:  # Skip header
+                    cell.number_format = '0.00'
+        
+        # Auto-adjust column widths
+        for column in worksheet.columns:
+            max_length = 0
+            column_letter = column[0].column_letter
+            for cell in column:
+                try:
+                    if cell.value:
+                        max_length = max(max_length, len(str(cell.value)))
+                except:
+                    pass
+            adjusted_width = min(max_length + 2, 50)  # Cap at 50 characters
+            worksheet.column_dimensions[column_letter].width = adjusted_width
+    
+    out.seek(0)
+    return out.read()

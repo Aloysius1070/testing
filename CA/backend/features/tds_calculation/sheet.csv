@@ -1,0 +1,37 @@
+TDS Account,Constant
+Purchase Water Tanker Taxable,Ledger
+Purchase Labour Charges,Ledger
+RM-Deduted From Labour,Ignore
+Purchase Security Service GST 18%,Ledger
+Input CGST @9%,Ignore
+Input SGST @9%,Ignore
+Round Off-Purchase,Ledger
+Purchase Labour GST 18%,Ledger
+ICICI Bank,Ledger
+Repair & Maintance Office Equipments,Ledger
+Purchase Transport GST 18%,Ledger
+Purchase Labour GST 12%,Ledger
+Input CGST @6%,Ignore
+Input SGST @6%,Ignore
+Purchase GST 18% Sub-Contract,Ledger
+Purchase Transport GST 12%,Ledger
+Interest on Late Payment TDS,Ignore
+Misc Exp,Ledger
+Purchase Transport,Ledger
+Balance Written Off,Ignore
+Printing & Stationery,Ledger
+Repair & Maintance - Car/ Bike@28%,Ledger
+Purchase GST 18%,Ledger
+Security Guard Service 18%,Ledger
+Purchase Security Service,Ledger
+Purchase Hire GST 18%,Ledger
+Purchase IGST 18%,Ledger
+Input IGST @18%,Ignore
+Purchase Transportation Charges,Ledger
+Repair & Maintance Vehicle Goods and Machinery,Ledger
+Purchase Transport GST 5%,Ledger
+Input CGST @2.50%,Ignore
+Input SGST @2.50%,Ignore
+Freight / Transport,Ledger
+Purchase Labour IGST 18%,Ledger
+Purchase Drinking Water,Ledger

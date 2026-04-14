@@ -48,6 +48,10 @@ OTP_TTL_SECONDS = 900              # OTP validity window (15 minutes)
 OTP_RESEND_COOLDOWN_SECONDS = 900   # Minimum gap between OTP sends per account (15 minutes)
 OTP_CLEANUP_DAYS = 1               # Delete OTPs older than N days
 
+# Cache plan names briefly to reduce repeated DB lookups on session restore and /me.
+PLAN_NAME_CACHE_TTL_SECONDS = 300
+_PLAN_NAME_CACHE: dict[int, tuple[str, float]] = {}
+
 # =========================================================
 # ✅ MODELS
 # =========================================================
@@ -136,6 +140,25 @@ def parse_db_timestamp_to_naive_utc(value) -> datetime:
     if dt.tzinfo is not None:
         dt = dt.replace(tzinfo=None)
     return dt
+
+
+def get_plan_name_cached(plan_id: int) -> str:
+    now_ts = datetime.utcnow().timestamp()
+    cached = _PLAN_NAME_CACHE.get(plan_id)
+    if cached and cached[1] > now_ts:
+        return cached[0]
+
+    plan_res = supabase.table("plans") \
+        .select("name") \
+        .eq("id", plan_id) \
+        .execute()
+
+    if not plan_res.data:
+        raise HTTPException(500, "Plan not found")
+
+    plan_name = plan_res.data[0]["name"]
+    _PLAN_NAME_CACHE[plan_id] = (plan_name, now_ts + PLAN_NAME_CACHE_TTL_SECONDS)
+    return plan_name
 
 
 def issue_otp_for_account(account_id: int, email: str) -> None:
@@ -1594,7 +1617,7 @@ def restore_session(request: Request):
         
         # Check if session is active in database
         active_session = supabase.table("active_sessions") \
-            .select("*") \
+            .select("id") \
             .eq("account_id", account_id) \
             .eq("device_id", device_id) \
             .eq("is_active", True) \
@@ -1602,8 +1625,6 @@ def restore_session(request: Request):
         
         if not active_session.data:
             return {"ok": True, "session": None}
-        
-        session = active_session.data[0]
         
         # Fetch account details
         account_res = supabase.table("accounts") \
@@ -1616,18 +1637,7 @@ def restore_session(request: Request):
         
         account = account_res.data[0]
         
-        # Fetch plan details
-        plan_res = supabase.table("plans") \
-            .select("name") \
-            .eq("id", account["plan_id"]) \
-            .execute()
-        
-        if not plan_res.data:
-            raise HTTPException(500, "Plan not found")
-        
-        plan = plan_res.data[0]
-        
-        plan_name = plan["name"]  # CLASSIC, PRIME, VIP
+        plan_name = get_plan_name_cached(account["plan_id"])  # CLASSIC, PRIME, VIP
         
         # Determine session type and redirect path
         session_type = None
@@ -1739,16 +1749,7 @@ def get_current_user_api(request: Request):
     
     account = account_res.data[0]
 
-    # Fetch plan details
-    plan_res = supabase.table("plans") \
-        .select("name") \
-        .eq("id", account["plan_id"]) \
-        .execute()
-    
-    if not plan_res.data:
-        raise HTTPException(500, "Plan not found")
-    
-    plan_data = plan_res.data[0]
+    plan_name = get_plan_name_cached(account["plan_id"])
 
     # Fetch profile name if logged in as profile
     profile_name = None
@@ -1780,7 +1781,7 @@ def get_current_user_api(request: Request):
         "email": account["email"],
         "full_name": account.get("full_name"),
         "role": role,
-        "plan": plan_data["name"],
+        "plan": plan_name,
         "expires_at": expires_at,
         "profile_id": profile_id,
         "profile_name": profile_name,

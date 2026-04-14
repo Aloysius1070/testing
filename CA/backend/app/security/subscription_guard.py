@@ -7,7 +7,7 @@ def enforce_active_subscription(account_id: int):
 
     sub = (
         supabase.table("subscriptions")
-        .select("*")
+        .select("id, end_date")
         .eq("account_id", account_id)
         .eq("status", "ACTIVE")
         .order("created_at", desc=True)
@@ -49,7 +49,7 @@ def enforce_active_firm_subscription(firm_id: int):
 
     sub = (
         supabase.table("subscriptions")
-        .select("*")
+        .select("id, end_date")
         .eq("firm_id", firm_id)
         .eq("status", "ACTIVE")
         .order("created_at", desc=True)

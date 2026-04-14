@@ -6,7 +6,6 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, Request
 from fastapi.responses import StreamingResponse
 from app.security.cookie_auth import get_current_user_from_cookie
 from app.security.trial_auth import verify_trial_token
-from .service import process_tds_file
 
 router = APIRouter(prefix="/api/tds", tags=["TDS Calculation"])
 
@@ -43,6 +42,9 @@ async def calculate_tds(request: Request, file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail='File must be CSV format')
     
     try:
+        # Lazy import keeps initial backend startup lean.
+        from .service import process_tds_file
+
         # Read uploaded file
         file_bytes = await file.read()
         

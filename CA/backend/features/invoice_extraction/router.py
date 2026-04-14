@@ -11,7 +11,6 @@ from app.security.trial_auth import verify_trial_token
 from app.security.jwt_utils import decode_access_token
 from features.trial.router import process_trial_phase
 
-from .service import parse_invoice_pages
 from .jobs import (
     create_job,
     get_job,
@@ -29,6 +28,9 @@ router = APIRouter(prefix="/api/invoice", tags=["Invoice Extraction"])
 async def process_job_async(job_id: str, file_bytes: bytes, filename: str, trial_info: dict = None):
     """Background task function to process invoice extraction"""
     try:
+        # Lazy import keeps cold-start fast for users who are not using this tool.
+        from .service import parse_invoice_pages
+
         # Get total pages
         doc = fitz.open(stream=file_bytes, filetype="pdf")
         total_pages = doc.page_count

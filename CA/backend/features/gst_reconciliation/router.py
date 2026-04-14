@@ -13,7 +13,6 @@ from app.security.tool_guard import tool_access_guard
 from fastapi import Depends
 from app.security.cookie_auth import get_current_user_from_cookie
 from app.security.trial_auth import verify_trial_token
-from .service import process_uploaded_excel
 from .jobs import (
     create_job,
     get_job,
@@ -31,6 +30,9 @@ router = APIRouter(prefix="/api/gst", tags=["GST Reconciliation"])
 async def process_job_async(job_id: str, file_bytes: bytes, filename: str, trial_info: dict = None):
     """Background task function to process GST check"""
     try:
+        # Lazy import keeps startup fast for auth/session endpoints.
+        from .service import process_uploaded_excel
+
         # Run CPU-intensive work in thread pool
         loop = asyncio.get_event_loop()
         download_name, output_bytes = await loop.run_in_executor(

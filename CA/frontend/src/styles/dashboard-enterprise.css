@@ -1,0 +1,363 @@
+/* ========================================
+   DASHBOARD ENTERPRISE DESIGN SYSTEM
+   ======================================== */
+
+/* CSS Variables */
+:root {
+  --dashboard-card-radius: 12px;
+  --dashboard-transition: 0.2s ease;
+  --dashboard-hover-lift: -4px;
+}
+
+/* ========================================
+   DASHBOARD LAYOUT
+   ======================================== */
+
+.dashboard-enterprise-container {
+  min-height: calc(100vh - 200px);
+  padding: 20px 24px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.dashboard-title {
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 24px 0;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.dashboard-subtitle {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* ========================================
+   TOOL CARDS GRID
+   ======================================== */
+
+.dashboard-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+/* ========================================
+   TOOL CARD DESIGN
+   ======================================== */
+
+.tool-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--dashboard-card-radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--dashboard-transition);
+  cursor: pointer;
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--tool-accent);
+  opacity: 0;
+  transition: opacity var(--dashboard-transition);
+}
+
+.tool-card:hover {
+  transform: translateY(var(--dashboard-hover-lift));
+  box-shadow: var(--shadow);
+  border-color: var(--tool-accent);
+}
+
+.tool-card:hover::before {
+  opacity: 1;
+}
+
+.tool-card:active {
+  transform: translateY(-2px);
+}
+
+/* Card Colors */
+.tool-card.gst {
+  --tool-accent: #8b5cf6;
+  --tool-bg: rgba(139, 92, 246, 0.08);
+}
+
+.tool-card.tds {
+  --tool-accent: #3b82f6;
+  --tool-bg: rgba(59, 130, 246, 0.08);
+}
+
+.tool-card.invoice {
+  --tool-accent: #06b6d4;
+  --tool-bg: rgba(6, 182, 212, 0.08);
+}
+
+.tool-card.ledger {
+  --tool-accent: #10b981;
+  --tool-bg: rgba(16, 185, 129, 0.08);
+}
+
+.tool-card.companies-data {
+  --tool-accent: #f59e0b;
+  --tool-bg: rgba(245, 158, 11, 0.12);
+}
+
+/* Card Icon */
+.tool-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--tool-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--tool-accent);
+  flex-shrink: 0;
+}
+
+/* Card Badge */
+.tool-card-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--tool-bg);
+  color: var(--tool-accent);
+}
+
+.tool-card-badge.most-used {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.tool-card-badge.new {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+/* Card Content */
+.tool-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+.tool-card-description {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+  flex: 1;
+}
+
+/* Card Footer */
+.tool-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* Primary Action Button */
+.tool-card-primary-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--tool-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--dashboard-transition);
+}
+
+.tool-card-primary-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.tool-card-primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Secondary Link */
+.tool-card-secondary-link {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color var(--dashboard-transition);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+  font-weight: 500;
+}
+
+.tool-card-secondary-link:hover {
+  color: var(--tool-accent);
+}
+
+/* Last Used Indicator */
+.tool-card-last-used {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.tool-card-last-used svg {
+  color: var(--tool-accent);
+}
+
+/* Locked State */
+.tool-card.locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tool-card.locked:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+}
+
+.tool-card.locked::before {
+  opacity: 0;
+}
+
+.tool-card-lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--dashboard-card-radius);
+}
+
+.tool-card-lock-message {
+  background: var(--panel);
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .dashboard-tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-title {
+    font-size: 32px;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-enterprise-container {
+    padding: 32px 16px 60px;
+  }
+  
+  .dashboard-tools-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .dashboard-title {
+    font-size: 28px;
+  }
+  
+  .dashboard-subtitle {
+    font-size: 15px;
+  }
+  
+  .tool-card {
+    padding: 24px;
+    min-height: 260px;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.tool-card-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

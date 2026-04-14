@@ -1,0 +1,166 @@
+# ===================================
+# Python
+# ===================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+virtualenv/
+
+# ===================================
+# Node.js / Frontend
+# ===================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Frontend build output
+dist/
+dist-ssr/
+.cache/
+*.local
+
+# ===================================
+# Environment Variables
+# ===================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.env
+
+# Keep example files
+!.env.example
+
+# ===================================
+# IDEs and Editors
+# ===================================
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ===================================
+# Logs
+# ===================================
+*.log
+logs/
+*.log.*
+
+# ===================================
+# Database
+# ===================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ===================================
+# OS Files
+# ===================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===================================
+# Deployment
+# ===================================
+.vercel
+.netlify
+.render
+
+# ===================================
+# Temporary Files
+# ===================================
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+
+# ===================================
+# Archives
+# ===================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ===================================
+# Documentation (optional - keep if needed)
+# ===================================
+# Uncomment these if you don't want to commit docs
+# CRITICAL_FIX_TRIAL_TOKEN.md
+# DEBUGGING_GUIDE.md
+# HOW_TO_CLEAR_TRIAL.md
+# IMPLEMENTATION_SUMMARY.md
+# PAYMENT_SYSTEM_IMPLEMENTATION.md
+# SYSTEM_FLOW_DIAGRAMS.md
+# TOOL_INTEGRATION_GUIDE.md
+# URGENT_FIXES_APPLIED.md
+
+# ===================================
+# Uploaded Files / User Data
+# ===================================
+uploads/
+backend/uploads/
+frontend/uploads/
+
+# ===================================
+# Test Coverage
+# ===================================
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# ===================================
+# Jupyter Notebook
+# ===================================
+.ipynb_checkpoints
+*.ipynb
+
+# ===================================
+# Migration Files (optional)
+# ===================================
+# backend/migrations/*.sql
+# Uncomment above if you want to ignore migration files
+
